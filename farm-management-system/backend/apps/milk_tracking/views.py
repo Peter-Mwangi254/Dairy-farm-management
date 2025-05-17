@@ -1,3 +1,8 @@
+"""
+This module contains the views for the milk tracking app.
+It includes API views for managing vendors, milk sales, and milk production.
+"""
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView

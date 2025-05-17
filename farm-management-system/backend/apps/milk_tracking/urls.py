@@ -1,3 +1,8 @@
+"""
+This module defines the URL patterns for the milk tracking app.
+It includes routes for vendors, milk sales, and milk production.
+"""
+
 from django.urls import path
 from .views import VendorListCreate, MilkSaleListCreate, MilkSaleDashboard, milk_production
 

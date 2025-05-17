@@ -1,6 +1,15 @@
+"""
+This module contains the models for the feed inventory app.
+It includes models for managing feed types, inventory, and expenses.
+"""
+
 from django.db import models
 
 class Expense(models.Model):
+    """
+    Represents an expense in the farm.
+    Contains fields for the description, category, amount, and date of the expense.
+    """
     EXPENSE_CATEGORIES = [
         ('Feed', 'Feed'),
         ('Labor', 'Labor'),
