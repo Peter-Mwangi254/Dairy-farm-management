@@ -10,7 +10,7 @@ export default function CowForm({ onSuccess }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await API.post('cows/', { name, breed, date_of_birth: dob });
+      await API.post('animal-health/cows/', { name, breed, date_of_birth: dob });
       setName(''); setBreed(''); setDob('');
       onSuccess?.();
     } catch (err) {

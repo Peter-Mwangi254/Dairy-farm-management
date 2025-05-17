@@ -1,0 +1,23 @@
+# Database
+*.sqlite3
+backups/
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+env/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Editor and OS-specific files
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

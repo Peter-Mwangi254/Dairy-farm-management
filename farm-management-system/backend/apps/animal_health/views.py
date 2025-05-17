@@ -1,6 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.views import APIView
+from django.db.models import Count
 from .models import Deworming, Vaccination, Cow, Steaming
 from .serializers import (
     CowSerializer,
@@ -72,3 +74,10 @@ class SteamingListCreateView(ListCreateAPIView):
     """List and create steaming records via generic views"""
     queryset = Steaming.objects.all()
     serializer_class = SteamingSerializer
+
+
+class HealthStatusView(APIView):
+    """View to get the health status of cows"""
+    def get(self, request, *args, **kwargs):
+        healthy_cows = Cow.objects.filter(health_status='Healthy').count()
+        return Response({"healthy_cows": healthy_cows})

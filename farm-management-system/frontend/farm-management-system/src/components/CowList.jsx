@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { mockCows } from '../mock/mockData'; // Import mock data
+import API from '../api/api';
 import '../App.css';
 
 export default function CowList({ refresh }) {
@@ -8,11 +8,15 @@ export default function CowList({ refresh }) {
 
   useEffect(() => {
     setLoading(true);
-    // Use mock data instead of API call
-    setTimeout(() => {
-      setCows(mockCows);
+    API.get('animal-health/cows/')
+      .then((res) => {
+      setCows(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
       setLoading(false);
-    }, 500); // Simulate API delay
+    });
   }, [refresh]);
 
   if (loading) return <div className="loading-message">Loading...</div>;
