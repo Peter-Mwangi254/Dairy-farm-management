@@ -351,3 +351,25 @@ body {
   text-align: left; /* Aligns text to the left */
   word-wrap: break-word; /* Prevents text overflow */
 }
+
+/* Footer Styles */
+.footer {
+  background-color: #2f855a; /* Green background */
+  color: #fff;
+  text-align: center;
+  padding: 16px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer a {
+  color: #c6f6d5; /* Light green */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #fff;
+}

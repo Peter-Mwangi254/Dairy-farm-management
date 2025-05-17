@@ -1,12 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.views import APIView
 from django.utils import timezone
 from django.db.models import Sum
+from datetime import datetime
 
-from .models import Vendor, MilkSale
+from .models import Vendor, MilkSale, MilkProduction
 from .serializers import VendorSerializer, MilkSaleSerializer
 
 
@@ -64,3 +65,19 @@ class MilkSaleDashboard(APIView):
                     .annotate(total_liters=Sum('liters_sold'))
         )
         return Response(vendor_sales, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def milk_production(request):
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        milk_data = MilkProduction.objects.filter(date__range=(start_date, end_date))
+    else:
+        milk_data = MilkProduction.objects.all()
+
+    data = milk_data.values('date').annotate(total_liters=Sum('liters'))
+    return Response(data)

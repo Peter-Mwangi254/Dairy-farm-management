@@ -1,104 +1,90 @@
-import { useState, useEffect } from 'react';
-import API from '../api/api';
-import Spinner from '../components/Spinner';
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend
-} from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import axios from '../api/api';
 import '../App.css';
 
 export default function Dashboard() {
-  const [cowCount, setCowCount] = useState(0);
-  const [totalMilk, setTotalMilk] = useState(0);
-  const [healthyCows] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedSection, setSelectedSection] = useState('overview');
-
-  const fetchData = () => {
-    setLoading(true);
-    setError(null);
-    Promise.all([
-      API.get('animal-health/cows/'),
-      API.get('milk/milk-sales/dashboard/'),
-      API.get('animal-health/cows/health-status/')
-    ])
-      .then(([cowsRes, salesRes]) => {
-        const cows = cowsRes.data;
-        setCowCount(cows.length);
-        setTotalMilk(salesRes.data.reduce((sum, sale) => sum + sale.total_liters, 0));
-      })
-      .catch(() => setError('Failed to load dashboard data'))
-      .finally(() => setLoading(false));
-  };
+  const [overviewData, setOverviewData] = useState([]);
+  const [milkProductionData, setMilkProductionData] = useState([]);
+  const [startDate, setStartDate] = useState('2025-05-10');
+  const [endDate, setEndDate] = useState('2025-05-17');
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const salesResponse = await axios.get('/milk/milk-sales/dashboard/');
+        const productionResponse = await axios.get('milk/milk-production/', {
+          params: { start_date: startDate, end_date: endDate },
+        });
+        setOverviewData(salesResponse.data);
+        setMilkProductionData(productionResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
     fetchData();
-  }, []);
-
-  if (loading) return <Spinner />;
-  if (error) return (
-    <div className="error-container">
-      <p className="error-message">{error}</p>
-      <button className="retry-button" onClick={fetchData}>Retry</button>
-    </div>
-  );
-
-  const data = {
-    overview: [
-      { name: 'Cows', value: cowCount },
-      { name: 'Milk Produced', value: totalMilk },
-    ],
-    cows: [
-      { name: 'Healthy Cows', count: healthyCows },
-      { name: 'Total Cows', count: cowCount },
-    ],
-    milk: [],
-  };
+  }, [startDate, endDate]);
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1>Dashboard</h1>
-        <div className="dashboard-tabs">
-          <button onClick={() => setSelectedSection('overview')}>Overview</button>
-          <button onClick={() => setSelectedSection('cows')}>Cows</button>
-          <button onClick={() => setSelectedSection('milk')}>Milk Production</button>
+      <header className="dashboard-header">
+        <h1>Dairy Farm Dashboard</h1>
+        <div className="profile-section">
+          <span>👤 Admin</span>
+          <span>{new Date().toLocaleDateString()}</span>
         </div>
+      </header>
+
+      <div className="overview-cards">
+        {overviewData.map((card, index) => (
+          <div key={index} className="card">
+            <span className="card-icon">{card.icon}</span>
+            <h2>{card.title}</h2>
+            <p>{card.value}</p>
+          </div>
+        ))}
       </div>
 
-      <div className="dashboard-content">
-        {selectedSection === 'overview' && (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data.overview}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
-        )}
+      <div className="chart-section">
+        <h2>Milk Production (Filtered by Date Range)</h2>
+        <div className="date-filters">
+          <label>
+            Start Date:
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </label>
+          <label>
+            End Date:
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </label>
+        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={milkProductionData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="liters" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
-        {selectedSection === 'cows' && (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data.cows}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        )}
-
-        {selectedSection === 'milk' && (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data.milk}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="liters" fill="#ffc658" />
-            </BarChart>
-          </ResponsiveContainer>
-        )}
+      <div className="summary-section">
+        <div className="summary-card">
+          <h2>Milk Sales Summary</h2>
+          <p>Weekly Revenue: $560</p>
+        </div>
+        <div className="summary-card">
+          <h2>Feed Costs Summary</h2>
+          <p>Weekly Feed Costs: $200</p>
+        </div>
       </div>
     </div>
   );

@@ -23,3 +23,15 @@ class MilkSale(models.Model):
 
     def __str__(self):
         return f"{self.liters_sold} liters sold to {self.vendor.name} on {self.date}"
+
+class MilkProduction(models.Model):
+    cow = models.ForeignKey('animal_health.Cow', on_delete=models.CASCADE, related_name='milk_productions')
+    date = models.DateField()
+    liters = models.DecimalField(max_digits=5, decimal_places=2)
+
+    class Meta:
+        unique_together = ('cow', 'date')
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"{self.cow.name} - {self.date}: {self.liters} liters"
