@@ -30,8 +30,9 @@ body {
   padding: 16px 32px;
   background-color: #2f855a; /* Green background */
   color: #fff;
-  z-index: 10;
-  position: relative;
+  z-index: 1000;
+  position: sticky;
+  top: 0;
 }
 
 .navbar-brand {
