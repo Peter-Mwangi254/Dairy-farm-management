@@ -21,12 +21,13 @@ function App() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const isSignupPage = window.location.pathname === '/signup';
+  const isLoginPage = location.pathname === '/login';
 
   return (
     <AuthProvider>
       <div className="app-container">
         <Navbar />
-        {!isHomePage && !isSignupPage && <Sidebar />}
+        {!isHomePage && !isSignupPage && !isLoginPage && <Sidebar />}
         <div className="content">
           <Routes>
             <Route path="/" element={<HeroPage />} />

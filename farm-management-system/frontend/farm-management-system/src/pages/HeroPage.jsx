@@ -17,7 +17,7 @@ export default function HeroPage() {
         </div>
       </div>
 
-      <div className="features-section">
+      <div id="features" className="features-section">
         <h2>Features</h2>
         <div className="features">
           <div className="feature-card">
@@ -97,6 +97,59 @@ export default function HeroPage() {
             <p>Analyze reports to improve your operations.</p>
           </div>
         </div>
+      </div>
+
+      <div id="pricing" className="pricing-section">
+        <h2>Pricing</h2>
+        <div className="pricing-tiers">
+          <div className="pricing-card">
+            <h3>Basic Plan</h3>
+            <p>Free</p>
+            <ul>
+              <li>Milk collection tracking</li>
+              <li>Basic reports</li>
+            </ul>
+          </div>
+          <div className="pricing-card">
+            <h3>Pro Plan</h3>
+            <p>$10/month</p>
+            <ul>
+              <li>All Basic features</li>
+              <li>Advanced analytics</li>
+              <li>Priority support</li>
+            </ul>
+          </div>
+          <div className="pricing-card">
+            <h3>Enterprise Plan</h3>
+            <p>Contact us</p>
+            <ul>
+              <li>Custom solutions</li>
+              <li>Dedicated support</li>
+              <li>Integration options</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="contact" className="contact-section">
+        <h2>Contact Us</h2>
+        <p>Have questions or need support? Reach out to us!</p>
+        <ul>
+          <li>Email: support@dairymanagement.com</li>
+          <li>Phone: +1-800-555-DAIRY</li>
+        </ul>
+        <form className="contact-form">
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+
+          <label htmlFor="message">Message:</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+
+          <button type="submit">Send</button>
+        </form>
       </div>
 
       <div className="cta-section">

@@ -31,6 +31,7 @@ body {
   background-color: #2f855a; /* Green background */
   color: #fff;
   z-index: 10;
+  position: relative;
 }
 
 .navbar-brand {
@@ -38,6 +39,17 @@ body {
   font-weight: bold;
 }
 
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Default Nav Links (Desktop) */
 .navbar-links {
   list-style: none;
   display: flex;
@@ -61,6 +73,56 @@ body {
 .navbar-links a:hover {
   color: #c6f6d5; /* Light green on hover */
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+  }
+
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 72px; /* Adjust based on navbar height */
+    right: 0;
+    background-color: #2f855a;
+    padding: 16px;
+    border-radius: 0 0 8px 8px;
+    width: 200px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    margin-bottom: 12px;
+  }
+
+  .navbar-links li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Desktop only override to ensure open menu displays inline */
+@media (min-width: 769px) {
+  .navbar-links {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    width: auto;
+  }
+
+  .navbar-links li {
+    margin-bottom: 0;
+  }
+}
+
 
 /* Hero Page Styles */
 .hero-page {
@@ -144,6 +206,8 @@ body {
 .testimonials-section,
 .screenshot-section,
 .how-it-works-section,
+.pricing-section,
+.contact-section,
 .cta-section {
   background-color: #fff; /* Solid white background */
   position: relative;
@@ -397,6 +461,192 @@ body {
   line-height: 1.5;
 }
 
+/* Pricing Section */
+.pricing-section {
+  background: linear-gradient(135deg, #f9f9f9 0%, #e6f4ea 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pricing-section h2 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.pricing-section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #2f855a;
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+.pricing-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.pricing-card {
+  background-color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 1rem;
+}
+
+.pricing-card ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+}
+
+.pricing-card ul li {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.pricing-card ul li::before {
+  content: "✔"; /* Checkmark */
+  color: #2f855a;
+  position: absolute;
+  left: 0;
+}
+
+/* Contact Section */
+.contact-section {
+  background: linear-gradient(135deg, #f9f9f9 0%, #e6f4ea 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.contact-section h2 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.contact-section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #2f855a;
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+.contact-section p {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contact-section ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.contact-section ul li {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form .form-input,
+.contact-form textarea {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-form .form-input:focus,
+.contact-form textarea:focus {
+  border-color: #2f855a;
+  box-shadow: 0 0 4px rgba(47, 133, 90, 0.5);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact-form .form-button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #38a169, #319795);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s ease;
+}
+
+.contact-form .form-button:hover {
+  background: linear-gradient(to right, #2f855a, #2c7a7b);
+  transform: scale(1.02);
+}
+
 /* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); /* Green gradient */
@@ -404,6 +654,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   text-align: center;
   color: white;
+  margin-bottom: 2rem; /* Add margin to create space between CTA and footer */
 }
 
 .cta-section h2 {
@@ -775,4 +1026,132 @@ body {
 
 .footer a:hover {
   color: #fff;
+}
+
+/* Signup Button Styles for Unauthorized Users */
+.signup-button {
+  background-color: #38a169; /* Highlighted green background */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #2f855a; /* Darker green on hover */
+}
+
+/* Login Page Styles */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9f9f9 0%, #e6f4ea 100%);
+  padding: 3rem 2rem;
+}
+
+.login-page h1 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.login-page h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #2f855a;
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+.login-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.login-form .form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.login-form .form-input {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-form .form-input:focus {
+  border-color: #2f855a;
+  box-shadow: 0 0 4px rgba(47, 133, 90, 0.5);
+}
+
+.login-form .form-button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #38a169, #319795);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s ease;
+}
+
+.login-form .form-button:hover {
+  background: linear-gradient(to right, #2f855a, #2c7a7b);
+  transform: scale(1.02);
+}
+
+.login-page .error-message {
+  margin-top: 1rem;
+  font-size: 16px;
+  color: #e53e3e;
+  text-align: center;
+}
+
+.login-page .redirect-message {
+  margin-top: 1rem;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.login-page .redirect-link {
+  color: #2f855a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-page .redirect-link:hover {
+  text-decoration: underline;
 }

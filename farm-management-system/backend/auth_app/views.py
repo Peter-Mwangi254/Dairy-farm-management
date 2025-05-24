@@ -14,4 +14,6 @@ class SignupView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             print("Validation errors:", serializer.errors)  # Log validation errors
+            if 'username' in serializer.errors and serializer.errors['username'][0].code == 'unique':
+                return Response({'message': 'A user with that username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

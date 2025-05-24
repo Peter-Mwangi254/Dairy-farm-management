@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { signup } from '../api/auth';
+import { useNavigate } from 'react-router-dom';
 import '../App.css'; // Ensure App.css is imported
 
 function SignupPage() {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,9 +18,10 @@ function SignupPage() {
     try {
       await signup(formData);
       setMessage('Signup successful! You can now log in.');
+      setTimeout(() => navigate('/login'), 2000); // Redirect to login page after 2 seconds
     } catch (error) {
       console.error(error);
-      setMessage('Signup failed. Please try again.');
+      setMessage(error.response?.data?.message || 'Signup failed. Please try again.');
     }
   };
 
@@ -65,6 +68,9 @@ function SignupPage() {
         <button type="submit" className="form-button">Signup</button>
       </form>
       {message && <p className={message.includes('successful') ? 'success-message' : 'error-message'}>{message}</p>}
+      <p className="redirect-message">
+        Already have an account? <a href="/login" className="redirect-link">Login</a>
+      </p>
     </div>
   );
 }
