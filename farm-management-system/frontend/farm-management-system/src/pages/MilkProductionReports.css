@@ -1,0 +1,39 @@
+.milk-production-reports {
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.milk-production-reports h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.date-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.date-filters label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+}
+
+.production-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.production-table th, .production-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.production-table th {
+  background-color: #2e7d32;
+  color: white;
+}
