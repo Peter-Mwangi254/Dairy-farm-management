@@ -66,7 +66,7 @@ export default function CowForm({ onSuccess }) {
 
         {/* Submit Button */}
         <button type="submit" className="form-button">
-          Create Cow
+          Add Cow
         </button>
       </form>
     </div>

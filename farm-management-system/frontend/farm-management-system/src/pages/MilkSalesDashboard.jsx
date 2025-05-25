@@ -7,6 +7,7 @@ function MilkSalesDashboard() {
   const [dashboardData, setDashboardData] = useState([]);
   const [totalMilkSold, setTotalMilkSold] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [feedExpenses, setFeedExpenses] = useState(0); // Placeholder for feed expenses
 
   useEffect(() => {
     async function fetchDashboardData() {
@@ -17,8 +18,11 @@ function MilkSalesDashboard() {
         const totalMilk = response.data.reduce((sum, item) => sum + item.total_liters, 0);
         setTotalMilkSold(totalMilk);
 
-        const revenue = totalMilk * 60; // Assuming price per liter is 60
+        const revenue = totalMilk * 60; // Assuming $60 per liter
         setTotalRevenue(revenue);
+
+        // Placeholder for feed expenses (replace with actual API call if available)
+        setFeedExpenses(5000); // Example value
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       }
@@ -28,29 +32,41 @@ function MilkSalesDashboard() {
   }, []);
 
   return (
-    <div className="milk-sales-dashboard">
-      <h1>Milk Sales Dashboard</h1>
-      <div className="dashboard-summary">
-        <div className="summary-card">
-          <h2>Total Milk Sold</h2>
-          <p>{totalMilkSold} liters</p>
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h1>Milk Sales Dashboard</h1>
+        <div className="header-info">
+          <span>{new Date().toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</span>
+          <span>May 2025</span>
         </div>
-        <div className="summary-card">
-          <h2>Total Revenue</h2>
-          <p>KES {totalRevenue.toFixed(2)}</p>
+      </header>
+      <div className="dashboard-content">
+        <div className="dashboard-metrics">
+          <div className="metric-card">
+            <h2>Total Milk Sold</h2>
+            <p>{totalMilkSold} liters</p>
+          </div>
+          <div className="metric-card">
+            <h2>Total Revenue</h2>
+            <p>KES {totalRevenue.toFixed(2)}</p>
+          </div>
+          <div className="metric-card">
+            <h2>Feed Expenses</h2>
+            <p>KES {feedExpenses.toFixed(2)}</p>
+          </div>
         </div>
-      </div>
-      <div className="dashboard-chart">
-        <h2>Daily Trends</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={dashboardData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="vendor__name" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="total_liters" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="dashboard-chart-section">
+          <h2>Daily Trends</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={dashboardData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis dataKey="vendor__name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="total_liters" stroke="#2e7d32" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );

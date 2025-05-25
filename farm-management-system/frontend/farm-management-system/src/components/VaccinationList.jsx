@@ -5,7 +5,7 @@ export default function VaccinationList({ cowId, refresh }) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    API.get(`vaccination/?cow=${cowId}`)
+    API.get(`animal-health/vaccination/?cow=${cowId}`)
        .then(res => setRecords(res.data))
        .catch(console.error);
   }, [cowId, refresh]);

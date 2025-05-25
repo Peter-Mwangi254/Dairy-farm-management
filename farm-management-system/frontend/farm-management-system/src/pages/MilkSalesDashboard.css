@@ -1,40 +1,119 @@
-.milk-sales-dashboard {
+.dashboard-container {
+  margin-left: 250px; /* Adjust for sidebar width */
   padding: 20px;
   background-color: #f9f9f9;
   color: #333;
-}
-
-.milk-sales-dashboard h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.dashboard-summary {
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  background-color: #e9ecef;
+  padding: 15px 20px;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #2e7d32;
+}
+
+.header-info {
+  display: flex;
+  gap: 20px;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.header-info span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.header-info span::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #6c757d;
+  border-radius: 50%;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.summary-card {
+.metric-card {
   background-color: #2e7d32;
   color: white;
   padding: 20px;
   border-radius: 8px;
-  flex: 1;
   text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.metric-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
+}
+
+.dashboard-chart-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.summary-card h2 {
+.dashboard-chart-section h2 {
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: #2e7d32;
 }
 
-.summary-card p {
-  font-size: 1.2rem;
-  font-weight: bold;
+.dashboard-footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+  margin-top: auto;
 }
 
-.dashboard-chart {
-  margin-top: 20px;
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 0;
+  }
+  .sidebar {
+    transform: translateX(-250px);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
 }

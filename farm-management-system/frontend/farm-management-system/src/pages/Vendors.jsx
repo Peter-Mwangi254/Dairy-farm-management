@@ -5,6 +5,7 @@ import './Vendors.css';
 function Vendors() {
   const [vendors, setVendors] = useState([]);
   const [newVendor, setNewVendor] = useState({ name: '', contact_info: '' });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     async function fetchVendors() {
@@ -13,6 +14,7 @@ function Vendors() {
         setVendors(response.data);
       } catch (error) {
         console.error('Error fetching vendors:', error);
+        setMessage('Error fetching vendors. Please try again.');
       }
     }
 
@@ -30,48 +32,93 @@ function Vendors() {
       const response = await axios.post('/milk/vendors/', newVendor);
       setVendors([...vendors, response.data]);
       setNewVendor({ name: '', contact_info: '' });
+      setMessage('Vendor added successfully!');
     } catch (error) {
       console.error('Error adding vendor:', error);
+      setMessage('Error adding vendor. Please try again.');
+    }
+  };
+
+  const handleDeleteVendor = async (id) => {
+    try {
+      await axios.delete(`/milk/vendors/${id}/`);
+      setVendors(vendors.filter((vendor) => vendor.id !== id));
+      setMessage('Vendor deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting vendor:', error);
+      setMessage('Error deleting vendor. Please try again.');
     }
   };
 
   return (
-    <div className="vendors">
-      <h1>Vendors</h1>
-      <form onSubmit={handleAddVendor} className="add-vendor-form">
-        <input
-          type="text"
-          name="name"
-          placeholder="Vendor Name"
-          value={newVendor.name}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="contact_info"
-          placeholder="Contact Info"
-          value={newVendor.contact_info}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Add Vendor</button>
-      </form>
-      <table className="vendors-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Contact Info</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vendors.map((vendor) => (
-            <tr key={vendor.id}>
-              <td>{vendor.name}</td>
-              <td>{vendor.contact_info}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="vendors-container">
+      <div className="vendors">
+        <h1>Vendors</h1>
+        <form onSubmit={handleAddVendor} className="add-vendor-form">
+          <div className="form-group">
+            <label htmlFor="name">Vendor Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter vendor name"
+              value={newVendor.name}
+              onChange={handleInputChange}
+              required
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contact_info">Contact Info:</label>
+            <input
+              type="text"
+              id="contact_info"
+              name="contact_info"
+              placeholder="Enter contact info"
+              value={newVendor.contact_info}
+              onChange={handleInputChange}
+              className="form-input"
+            />
+          </div>
+          <button type="submit" className="form-button">Add Vendor</button>
+        </form>
+        {message && (
+          <p className={message.includes('Error') ? 'error-message' : 'success-message'}>
+            {message}
+          </p>
+        )}
+        {vendors.length === 0 ? (
+          <p className="no-vendors-message">No vendors available.</p>
+        ) : (
+          <div className="table-container">
+            <table className="vendors-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Contact Info</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vendors.map((vendor) => (
+                  <tr key={vendor.id}>
+                    <td>{vendor.name}</td>
+                    <td>{vendor.contact_info || 'N/A'}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDeleteVendor(vendor.id)}
+                        className="delete-button"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export default function DewormingList({ cowId, refresh }) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    API.get(`deworming/?cow=${cowId}`)
+    API.get(`animal-health/deworming/?cow=${cowId}`)
        .then(res => setRecords(res.data))
        .catch(console.error);
   }, [cowId, refresh]);

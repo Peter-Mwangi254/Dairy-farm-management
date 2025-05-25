@@ -9,7 +9,7 @@ class CowSerializer(serializers.ModelSerializer):
 class DewormingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deworming
-        fields = ['id', 'cow', 'date']
+        fields = '__all__'
 
 class VaccinationSerializer(serializers.ModelSerializer):
     class Meta:

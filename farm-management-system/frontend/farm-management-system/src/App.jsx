@@ -15,6 +15,8 @@ import Vendors from './pages/Vendors';
 import MilkProductionReports from './pages/MilkProductionReports';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
+import CowsManagement from './pages/CowsManagement';
+import VaccinationDeworming from './pages/VaccinationDeworming'; // Import the new component
 import './App.css';
 
 function App() {
@@ -71,7 +73,7 @@ function App() {
               path="/cows-management"
               element={
                 <ProtectedRoute>
-                  <div>Cows Management</div>
+                  <CowsManagement />
                 </ProtectedRoute>
               }
             />
@@ -79,7 +81,7 @@ function App() {
               path="/vaccination-deworming"
               element={
                 <ProtectedRoute>
-                  <div>Vaccination & Deworming</div>
+                  <VaccinationDeworming />
                 </ProtectedRoute>
               }
             />
