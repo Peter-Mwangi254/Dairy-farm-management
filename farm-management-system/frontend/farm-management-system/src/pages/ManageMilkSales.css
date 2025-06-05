@@ -1,39 +1,60 @@
 .manage-milk-sales {
+  margin-left: 250px; /* Adjust this value based on the sidebar width */
   padding: 20px;
+  box-sizing: border-box;
   background-color: #f9f9f9;
   color: #333;
 }
 
 .manage-milk-sales h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.add-sale-form {
-  display: flex;
-  gap: 10px;
   margin-bottom: 20px;
+  font-size: 24px;
+  color: #2f855a;
 }
 
-.add-sale-form input {
+.milk-sale-form {
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.milk-sale-form h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #2f855a;
+}
+
+.milk-sale-form .form-group {
+  margin-bottom: 15px;
+}
+
+.milk-sale-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.milk-sale-form .form-group input {
+  width: 100%;
   padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.add-sale-form button {
-  padding: 8px 16px;
-  font-size: 1rem;
-  background-color: #2e7d32;
+.milk-sale-form .submit-button {
+  background-color: #2f855a;
   color: white;
+  padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.add-sale-form button:hover {
-  background-color: #276628;
+.milk-sale-form .submit-button:hover {
+  background-color: #276749;
 }
 
 .sales-table {

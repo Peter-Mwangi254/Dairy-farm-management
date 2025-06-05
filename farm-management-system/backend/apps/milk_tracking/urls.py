@@ -5,7 +5,7 @@ It includes routes for vendors, milk sales, and milk production.
 
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from .views import VendorListCreate, MilkSaleListCreate, MilkSaleDashboard, milk_production, VendorViewSet
+from .views import VendorListCreate, MilkSaleListCreate, MilkSaleDashboard, milk_production, VendorViewSet, VendorListView
 
 # Define the router and register the VendorViewSet
 router = DefaultRouter()
@@ -20,3 +20,7 @@ urlpatterns = [
 
 # Add the router URLs to the urlpatterns
 urlpatterns += router.urls
+
+urlpatterns += [
+    path('vendors/', VendorListView.as_view(), name='vendor-list'),
+]

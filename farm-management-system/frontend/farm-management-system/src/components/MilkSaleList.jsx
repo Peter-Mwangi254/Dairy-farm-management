@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import API from '../api/api';
 
-export default function MilkSaleList({ cowId, refresh }) {
+export default function MilkSaleList({ vendorId, refresh }) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    API.get(`milk-sales/?vendor=${cowId}`)
+    if (!vendorId) {
+      console.error('Vendor ID is missing');
+      return;
+    }
+
+    API.get(`milk-sales/?vendor=${vendorId}`)
        .then(res => setRecords(res.data))
        .catch(console.error);
-  }, [cowId, refresh]);
+  }, [vendorId, refresh]);
 
   if (!records.length) return <p className="no-cows-message">No milk sales recorded.</p>;
 

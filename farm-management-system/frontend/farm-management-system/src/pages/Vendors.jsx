@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../api/api';
+import API from '../api/api';
 import './Vendors.css';
 
 function Vendors() {
@@ -10,7 +10,7 @@ function Vendors() {
   useEffect(() => {
     async function fetchVendors() {
       try {
-        const response = await axios.get('/milk/vendors/');
+        const response = await API.get('milk/vendors/');
         setVendors(response.data);
       } catch (error) {
         console.error('Error fetching vendors:', error);
@@ -29,7 +29,7 @@ function Vendors() {
   const handleAddVendor = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/milk/vendors/', newVendor);
+      const response = await API.post('milk/vendors/', newVendor);
       setVendors([...vendors, response.data]);
       setNewVendor({ name: '', contact_info: '' });
       setMessage('Vendor added successfully!');
@@ -41,7 +41,7 @@ function Vendors() {
 
   const handleDeleteVendor = async (id) => {
     try {
-      await axios.delete(`/milk/vendors/${id}/`);
+      await API.delete(`milk/vendors/${id}/`);
       setVendors(vendors.filter((vendor) => vendor.id !== id));
       setMessage('Vendor deleted successfully!');
     } catch (error) {

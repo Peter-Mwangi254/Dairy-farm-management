@@ -1,80 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../api/api';
+import React, { useState, useEffect } from 'react';
+import API from '../api/api';
+import MilkSaleList from '../components/MilkSaleList';
+import MilkSaleForm from '../components/MilkSaleForm';
 import './ManageMilkSales.css';
 
 function ManageMilkSales() {
-  const [sales, setSales] = useState([]);
-  const [newSale, setNewSale] = useState({ vendor: '', liters_sold: '' });
+  const [selectedVendorId, setSelectedVendorId] = useState('');
+  const [vendors, setVendors] = useState([]);
 
   useEffect(() => {
-    async function fetchSales() {
-      try {
-        const response = await axios.get('/milk/milk-sales/');
-        setSales(response.data);
-      } catch (error) {
-        console.error('Error fetching sales:', error);
-      }
-    }
-
-    fetchSales();
+    API.get('milk/vendors/')
+      .then((res) => setVendors(res.data))
+      .catch((err) => console.error('Failed to fetch vendors:', err));
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewSale({ ...newSale, [name]: value });
-  };
-
-  const handleAddSale = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/milk/milk-sales/', newSale);
-      setSales([...sales, response.data]);
-      setNewSale({ vendor: '', liters_sold: '' });
-    } catch (error) {
-      console.error('Error adding sale:', error);
-    }
+  const handleVendorChange = (e) => {
+    setSelectedVendorId(e.target.value);
   };
 
   return (
     <div className="manage-milk-sales">
       <h1>Manage Milk Sales</h1>
-      <form onSubmit={handleAddSale} className="add-sale-form">
-        <input
-          type="text"
-          name="vendor"
-          placeholder="Vendor Name"
-          value={newSale.vendor}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="number"
-          name="liters_sold"
-          placeholder="Liters Sold"
-          value={newSale.liters_sold}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit">Add Sale</button>
-      </form>
-      <table className="sales-table">
-        <thead>
-          <tr>
-            <th>Vendor</th>
-            <th>Date</th>
-            <th>Liters Sold</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sales.map((sale) => (
-            <tr key={sale.id}>
-              <td>{sale.vendor}</td>
-              <td>{sale.date}</td>
-              <td>{sale.liters_sold}</td>
-            </tr>
+      <MilkSaleForm onSuccess={() => window.location.reload()} />
+      <div className="form-group">
+        <label htmlFor="vendor">Filter by Vendor:</label>
+        <select id="vendor" value={selectedVendorId} onChange={handleVendorChange}>
+          <option value="">All Vendors</option>
+          {vendors.map((vendor) => (
+            <option key={vendor.id} value={vendor.id}>
+              {vendor.name}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+      </div>
+      <MilkSaleList vendorId={selectedVendorId} />
     </div>
   );
 }

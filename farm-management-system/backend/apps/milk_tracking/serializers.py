@@ -7,7 +7,7 @@ class VendorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MilkSaleSerializer(serializers.ModelSerializer):
-    vendor = VendorSerializer()  # Nested serializer for vendor
+    vendor = serializers.PrimaryKeyRelatedField(queryset=Vendor.objects.all())  # Use PrimaryKeyRelatedField for vendor
     total_earned = serializers.ReadOnlyField()  # Use the model's property
 
     class Meta:
@@ -15,16 +15,14 @@ class MilkSaleSerializer(serializers.ModelSerializer):
         fields = ['id', 'vendor', 'date', 'liters_sold', 'total_earned']  # Include total_earned
 
     def create(self, validated_data):
-        vendor_data = validated_data.pop('vendor')
-        vendor, created = Vendor.objects.get_or_create(**vendor_data)
-        milk_sale = MilkSale.objects.create(vendor=vendor, **validated_data)
+        vendor = validated_data.pop('vendor')  # Get the vendor data
+        milk_sale = MilkSale.objects.create(vendor=vendor, **validated_data)  # Create the MilkSale object
         return milk_sale
 
     def update(self, instance, validated_data):
-        vendor_data = validated_data.pop('vendor', None)
-        if vendor_data:
-            vendor, created = Vendor.objects.get_or_create(**vendor_data)
-            instance.vendor = vendor
+        vendor = validated_data.pop('vendor', None)
+        if vendor is not None:
+            instance.vendor_id = vendor  # Update the vendor_id directly
         instance.date = validated_data.get('date', instance.date)
         instance.liters_sold = validated_data.get('liters_sold', instance.liters_sold)
         instance.save()

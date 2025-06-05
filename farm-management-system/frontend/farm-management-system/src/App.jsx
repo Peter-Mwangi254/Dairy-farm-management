@@ -17,6 +17,7 @@ import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import CowsManagement from './pages/CowsManagement';
 import VaccinationDeworming from './pages/VaccinationDeworming'; // Import the new component
+import UserProfile from './pages/UserProfile';
 import './App.css';
 
 function App() {
@@ -102,6 +103,14 @@ function App() {
               }
             />
             <Route path="/signup" element={<SignupPage />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<p className="loading-message">Page not found</p>} />
           </Routes>
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../api/api';
 import VaccinationForm from '../components/VaccinationForm';
 import VaccinationList from '../components/VaccinationList';
-import DewormingForm from '../components/DewormingForm';
+import DewormingForm from '../components/DewormingForm'; 
 import DewormingList from '../components/DewormingList';
 import '../App.css';
 

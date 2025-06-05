@@ -5,7 +5,7 @@ It includes API views for managing vendors, milk sales, and milk production.
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, ListAPIView
 from rest_framework.decorators import action, api_view
 from rest_framework.views import APIView
 from django.utils import timezone
@@ -86,3 +86,9 @@ def milk_production(request):
 
     data = milk_data.values('date').annotate(total_liters=Sum('liters'))
     return Response(data)
+
+
+class VendorListView(ListAPIView):
+    """API view to retrieve the list of vendors"""
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
